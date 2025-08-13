@@ -12,6 +12,7 @@ node_modules/
 dist
 dist-ssr
 *.local
+.prettierrc
 
 # Editor directories and files
 .vscode/*
@@ -19,7 +20,6 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
-*.ntvs*
-*.njsproj
 *.sln
 *.sw?
+
