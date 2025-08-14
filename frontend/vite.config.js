@@ -8,5 +8,8 @@ export default defineConfig({
     port: 4000,
     strictPort: true,
     historyApiFallback: true,
+    proxy: {
+      '/api': 'http://localhost:5000',
+    },
   },
 });
