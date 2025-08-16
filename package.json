@@ -7,9 +7,13 @@
     "prettier": "^3.6.2"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.7",
+    "colors": "^1.4.0",
     "dotenv": "^17.2.1",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^8.17.1"
   },
   "name": "proshop",
   "version": "1.0.0",
@@ -19,8 +23,11 @@
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module"
 }
