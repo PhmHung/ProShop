@@ -1,19 +1,14 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import { productListReducer } from './reducer/productReducers'
 
 const reducer = combineReducers({
-  // product: productReducer,
+  productList: productListReducer
 })
 
-const isDev =
-  typeof process !== 'undefined'
-    ? process.env.NODE_ENV !== 'production'
-    : import.meta.env.MODE !== 'production';
 const store = configureStore({
   reducer,
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk), 
-  // thunk đã có sẵn, không cần thêm
-  preloadedState: {}, // = initialState
-  devTools: isDev
+  preloadedState: {}, 
+  devTools: import.meta.env.MODE !== 'production',
 })
 
 export default store
