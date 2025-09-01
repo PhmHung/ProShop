@@ -14,6 +14,7 @@ import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listProductDetails } from '../actions/productsAction.jsx';
+import { addToCart } from '../slices/cartSlice.js';
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
@@ -28,7 +29,8 @@ const ProductScreen = () => {
   }, [dispatch, id]);
 
   const addToCartHandler = () => {
-    navigate(`/cart/${id}?qty=${qty}`);
+    dispatch(addToCart(...product, qty));
+    navigate(`/cart`);
   };
 
   return (
@@ -94,6 +96,7 @@ const ProductScreen = () => {
                         <Form.Control
                           as="select"
                           value={qty}
+                          style={{ color: 'black', backgroundColor: 'white' }}
                           onChange={(e) => setQty(e.target.value)}
                         >
                           {[...Array(product.countInStock).keys()].map((x) => (
