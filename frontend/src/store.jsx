@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
-  productDetailsReducer,
   productListReducer,
+  productDetailsReducer,
 } from './reducer/productReducers';
 import { cartReducer } from './reducer/cartReducers';
 const reducer = combineReducers({

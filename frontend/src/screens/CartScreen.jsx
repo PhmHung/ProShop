@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import {
@@ -10,22 +10,22 @@ import {
   Button,
   Card,
 } from 'react-bootstrap';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { addToCart, removeFromCart } from '../slices/cartSlice';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
+import { addToCart, removeFromCart } from '../actions/cartAction.jsx';
 
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const productId = useParams().id;
-  //  const location = useLocation();
+  const { id: productId } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
-
-  //  const qty = location.search ? Number(location.search.split('=')[1]) : 1;
-
-  const addToCartHandler = async (product, qty) => {
-    dispatch(addToCart(productId, qty));
-    navigate('/cart');
-  };
+  //const { cartItems } = cart;
+  const qty = location.search ? Number(location.search.split('=')[1]) : 1;
+  useEffect(() => {
+    if (productId) {
+      dispatch(addToCart(productId, qty));
+    }
+  }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
@@ -60,7 +60,7 @@ const CartScreen = () => {
                       style={{ color: 'black', backgroundColor: 'white' }}
                       onChange={(e) =>
                         dispatch(
-                          addToCartHandler(item.product, Number(e.target.value))
+                          addToCart(item.product, Number(e.target.value))
                         )
                       }
                     >
