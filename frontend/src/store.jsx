@@ -4,11 +4,13 @@ import {
   productDetailsReducer,
 } from './reducer/productReducers';
 import { cartReducer } from './reducer/cartReducers';
+import { orderCreateReducer } from './reducer/orderRuducer';
 import { userLoginReducer, userRegisterReducer } from './reducer/userReducer';
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
+  orderCreate: orderCreateReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
 });
