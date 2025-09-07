@@ -4,13 +4,19 @@ import {
   productDetailsReducer,
 } from './reducer/productReducers';
 import { cartReducer } from './reducer/cartReducers';
-import { orderCreateReducer } from './reducer/orderRuducer';
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderPayReducer,
+} from './reducer/orderRuducer';
 import { userLoginReducer, userRegisterReducer } from './reducer/userReducer';
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
   orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
 });
