@@ -10,10 +10,12 @@ const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
-  const [address, setAddress] = useState(shippingAddress.address);
-  const [city, setCity] = useState(shippingAddress.city);
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-  const [country, setCountry] = useState(shippingAddress.country);
+  const [address, setAddress] = useState(shippingAddress.address || '');
+  const [city, setCity] = useState(shippingAddress.city || '');
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress.postalCode || ''
+  );
+  const [country, setCountry] = useState(shippingAddress.country || '');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ const ShippingScreen = () => {
           <Form.Control
             type="text"
             placeholder="Enter address"
-            value={address}
+            value={address || ''}
             onChange={(e) => setAddress(e.target.value)}
           />
         </Form.Group>
@@ -44,7 +46,7 @@ const ShippingScreen = () => {
           <Form.Control
             type="text"
             placeholder="Enter city"
-            value={city}
+            value={city || ''}
             onChange={(e) => setCity(e.target.value)}
           />
         </Form.Group>
@@ -54,7 +56,7 @@ const ShippingScreen = () => {
           <Form.Control
             type="text"
             placeholder="Enter postal code"
-            value={postalCode}
+            value={postalCode || ''}
             onChange={(e) => setPostalCode(e.target.value)}
           />
         </Form.Group>
@@ -64,7 +66,7 @@ const ShippingScreen = () => {
           <Form.Control
             type="text"
             placeholder="Enter country"
-            value={country}
+            value={country || ''}
             onChange={(e) => setCountry(e.target.value)}
           />
         </Form.Group>

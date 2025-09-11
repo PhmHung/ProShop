@@ -22,12 +22,11 @@ const OrderScreen = () => {
 
   //const [sdkReady, setSdkReady] = useState(false);
 
-  if (!loading) {
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2);
-    };
+  let itemsPrice = 0;
 
-    order.itemsPrice = addDecimals(
+  if (!loading && order?.orderItems) {
+    const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2);
+    itemsPrice = addDecimals(
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
@@ -41,6 +40,7 @@ const OrderScreen = () => {
     addPayPalScript();
 
     if (!order || successPay || order._id !== orderId) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
     }
   }, [dispatch, orderId, successPay, order]);
@@ -150,7 +150,7 @@ const OrderScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order?.itemsPrice}</Col>
+                  <Col>${itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
