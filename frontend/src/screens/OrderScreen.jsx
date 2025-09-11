@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,17 +7,20 @@ import Loader from '../components/Loader';
 import { getOrderDetails, payOrder } from '../actions/orderAction';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { ORDER_PAY_RESET } from '../constants/orderConstants';
-//import axios from 'axios';
+import axios from 'axios';
 
 const OrderScreen = () => {
   const orderId = window.location.pathname.split('/')[2];
   const dispatch = useDispatch();
+  const [clientId, setClientId] = useState();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, error, order } = orderDetails;
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+
+  //const [sdkReady, setSdkReady] = useState(false);
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -30,14 +33,14 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
-    // const addPayPalScript = async () => {
-    //   const { data: clientId } = await axios.get('/api/config/paypal');
-    //   console.log(clientId);
-    // };
+    const addPayPalScript = async () => {
+      const { data } = await axios.get('/api/config/paypal');
+      setClientId(data); // data = clientId từ backend
+    };
 
-    //addPayPalScript();
+    addPayPalScript();
+
     if (!order || successPay || order._id !== orderId) {
-      dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
     }
   }, [dispatch, orderId, successPay, order]);
@@ -46,7 +49,6 @@ const OrderScreen = () => {
     console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
-
   if (!loading && !error && !order) {
     return <Message variant="danger">Order not found</Message>;
   }
@@ -173,32 +175,37 @@ const OrderScreen = () => {
               {!order?.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
-                  <PayPalScriptProvider
-                    options={{ 'client-id': 'YOUR_CLIENT_ID' }}
-                  >
-                    <PayPalButtons
-                      style={{ layout: 'vertical' }}
-                      createOrder={(data, actions) => {
-                        return actions.order.create({
-                          purchase_units: [
-                            {
-                              amount: {
-                                value: order?.totalPrice?.toString() || '0',
+
+                  {!clientId ? (
+                    <Loader />
+                  ) : (
+                    <PayPalScriptProvider options={{ 'client-id': clientId }}>
+                      <PayPalButtons
+                        style={{ layout: 'vertical' }}
+                        createOrder={(data, actions) => {
+                          return actions.order.create({
+                            purchase_units: [
+                              {
+                                amount: {
+                                  value: order?.totalPrice?.toString() || '0',
+                                },
                               },
-                            },
-                          ],
-                        });
-                      }}
-                      onApprove={(data, actions) => {
-                        return actions.order.capture().then((paymentResult) => {
-                          successPaymentHandler(paymentResult);
-                        });
-                      }}
-                      onError={(err) => {
-                        console.error('PayPal Checkout Error:', err);
-                      }}
-                    />
-                  </PayPalScriptProvider>
+                            ],
+                          });
+                        }}
+                        onApprove={(data, actions) => {
+                          return actions.order
+                            .capture()
+                            .then((paymentResult) => {
+                              successPaymentHandler(paymentResult);
+                            });
+                        }}
+                        onError={(err) => {
+                          console.error('PayPal Checkout Error:', err);
+                        }}
+                      />
+                    </PayPalScriptProvider>
+                  )}
                 </ListGroup.Item>
               )}
             </ListGroup>
