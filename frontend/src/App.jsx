@@ -15,6 +15,7 @@ import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductListScreen from './screens/ProductListScreen';
+import ProductEditScreen from './screens/ProductEditScreen';
 
 const App = () => {
   return (
@@ -35,6 +36,10 @@ const App = () => {
             <Route path="/admin/userList" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
             <Route path="/admin/productlist" element={<ProductListScreen />} />
+            <Route
+              path="/admin/product/:id/edit"
+              element={<ProductEditScreen />}
+            />
           </Routes>
         </Container>
       </main>
