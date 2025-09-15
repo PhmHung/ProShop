@@ -2,11 +2,12 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import path from 'path';
+import colors from 'colors';
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-import uploadRouters from '/routes/uploadRouters';
+import uploadRouters from './routes/uploadRoutes.js';
 
 dotenv.config();
 

@@ -11,5 +11,9 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:5000',
     },
+    build: {
+      sourcemap: true,
+      sourcemapIgnoreList: (source) => source.includes('bootstrap.min.css'),
+    },
   },
 });

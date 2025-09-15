@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   productListReducer,
   productDetailsReducer,
+  productDeleteReducer,
 } from './reducer/productReducers';
 import { cartReducer } from './reducer/cartReducers';
 import {
@@ -21,6 +22,7 @@ import {
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
+  productDelete: productDeleteReducer,
   cart: cartReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
