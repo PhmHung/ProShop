@@ -14,6 +14,11 @@ const reviewSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
   },
   {
     timestamps: true,
@@ -29,7 +34,7 @@ const productSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     image: {
       type: String,
@@ -41,32 +46,35 @@ const productSchema = mongoose.Schema(
     },
     catelory: {
       type: String,
-      require: true,
+      required: true,
       default: false,
     },
     description: {
       type: String,
-      require: true,
+      required: true,
     },
-    reviews: [reviewSchema],
+    reviews: {
+      type: [reviewSchema],
+      default: [],
+    },
     rating: {
       type: Number,
-      require: true,
+      required: true,
       default: 0,
     },
     numReviews: {
       type: Number,
-      require: true,
+      required: true,
       default: 0,
     },
     price: {
       type: Number,
-      require: true,
+      required: true,
       default: 0,
     },
     countInStock: {
       type: Number,
-      require: true,
+      required: true,
       default: 0,
     },
   },

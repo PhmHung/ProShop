@@ -132,12 +132,12 @@ const ProductEditScreen = () => {
                 value={image || ''}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              <Form.File
-                id="image-file"
-                label="Choose File"
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
+
+              <Form.Group controlId="image-file">
+                <Form.Label>Choose File</Form.Label>
+                <Form.Control type="file" onChange={uploadFileHandler} />
+              </Form.Group>
+
               {uploading && <Loader />}
             </Form.Group>
 
