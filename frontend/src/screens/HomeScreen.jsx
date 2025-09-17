@@ -8,6 +8,7 @@ import Paginate from '../components/Paginate';
 //import axios from 'axios';
 import { listProducts } from '../actions/productsAction';
 import { useParams } from 'react-router-dom';
+import ProductCarousel from '../components/ProductCarousel';
 
 const HomeScreen = () => {
   const { keyword } = useParams();
@@ -23,6 +24,7 @@ const HomeScreen = () => {
 
   return (
     <>
+      {!keyword && <ProductCarousel />}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />

@@ -82,7 +82,10 @@ const ProductEditScreen = () => {
         },
       };
       const { data } = await axios.post('/api/upload', formData, config);
-      setImage(data);
+
+      // Nếu backend trả về object { url: '...' }
+      setImage(data.url || data);
+
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -126,18 +129,20 @@ const ProductEditScreen = () => {
 
             <Form.Group controlId="Image">
               <Form.Label>Image</Form.Label>
+
+              {/* Input URL hoặc sẽ tự update khi chọn file */}
               <Form.Control
                 type="text"
                 placeholder="Enter Image URL"
                 value={image || ''}
                 onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
+              />
 
-              <Form.Group controlId="image-file">
+              {/* Upload file */}
+              <Form.Group controlId="image-file" className="mt-2">
                 <Form.Label>Choose File</Form.Label>
                 <Form.Control type="file" onChange={uploadFileHandler} />
               </Form.Group>
-
               {uploading && <Loader />}
             </Form.Group>
 
